@@ -4,11 +4,15 @@ import { createBid } from '../utils/API';
 import Auth from '../utils/auth';
 
 const Profile = () => {
-  const [bidData, setBidData] = useState({name: '', description: '', price: ''});
+  const [bidData, setBidData] = useState({name: '', description: '', price: '', image: null});
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setBidData({ ...bidData, [name]: value });
+  };
+
+  const handleImageChange = (event) => {
+    setBidData({ ...bidData, image: event.target.files[0] });
   };
 
   const handleForm = async (event) =>{
@@ -25,18 +29,31 @@ const Profile = () => {
       console.log(bidData);
       const data = await createBid(bidData);
       //Auth.login(data.login.token)
-      console.log(data);
+      const results = await data.json();
+      console.log(results);
     }
+    // try {
+    //   console.log(bidData);
+    //   const formData = new FormData();
+    //   formData.append('name', bidData.name);
+    //   formData.append('description', bidData.description);
+    //   formData.append('price', bidData.price);
+    //   formData.append('image', bidData.image);
+    //   console.log(formData);
+
+    //   const data = await createBid(formData);
+    //   console.log(data);
+    // }
     catch(err){
       console.log(JSON.stringify(err));
     };
 
-    setBidData({name: '', description: '', price: ''});
+    setBidData({name: '', description: '', price: '', image: null});
   };
 
   return(
     <>
-      <Form onSubmit={handleForm} className="loginform">
+      <Form onSubmit={handleForm} enctype="multipart/form-data" action="/upload" method="POST"> 
         <Form.Group controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control 
@@ -66,6 +83,11 @@ const Profile = () => {
           value= {bidData.price}
           placeholder="Enter a starting price."  
           onChange={handleInputChange}/>
+        </Form.Group>
+
+        <Form.Group controlId="formBasicImage">
+          <Form.Label>Image</Form.Label>
+          <Form.Control type="file" name="image" onChange={handleImageChange} />
         </Form.Group>
 
         <Button variant="primary" type="submit">
