@@ -2,6 +2,13 @@ const router = require('express').Router();
 const { Bid, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const upload = multer({ dest: 'uploads/'});
+
+
 router.get('/', async (req, res) => {
   try {
     // Get all posts and JOIN with user data
@@ -18,20 +25,25 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   console.log(req.body);
-  console.log(req.session);
-  try {
-    const newBid = await Bid.create({
-      ...req.body,
-      user_id: req.session.user_id,
-    });
+  console.log(req.file);
+  // try {
+  //   const newBid = await Bid.create({
+  //     ...req.body,
+  //     user_id: req.session.user_id,
+  //     image: req.file ? '/images/' + req.file.name : null, // save image path to database if it exists
+  //   });
 
-    res.status(200).json(newBid);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json(err);
-  }
+  //   res.status(200).json(newBid);
+  // } catch (err) {
+  //   // remove uploaded image if an error occurs
+  //   if (req.file) {
+  //     fs.unlinkSync(path.join(__dirname, '../../public', req.file.path));
+  //   }
+  //   console.log(err);
+  //   res.status(400).json(err);
+  // }
 });
 
 

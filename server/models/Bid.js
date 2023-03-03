@@ -22,21 +22,15 @@ Bid.init(
         type: DataTypes.STRING,
         allowNull: false,
       },
-    // date_created: {
-    //   type: DataTypes.DATE,
-    //   allowNull: true,
-    //   defaultValue: DataTypes.NOW,
-    // },
-    // expiration_date: {
-    //   type: DataTypes.DATE,
-    //   allowNull: true,
-    // },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'user',
         key: 'id',
       },
+    },
+    image: {
+      type: DataTypes.STRING,
     },
   },
   {

@@ -31,13 +31,32 @@ export const getBids = () => {
   return fetch('/api/bids');
 };
 
+// export const createBid = (bidData) => {
+//   console.log(bidData);
+//   return fetch('/api/bids', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(bidData),
+//   });
+// };
+
 export const createBid = (bidData) => {
-  console.log(bidData);
+  console.log(bidData.name);
+  const formData = new FormData();
+  formData.append('name', bidData.name);
+  formData.append('description', bidData.description);
+  formData.append('price', bidData.price);
+  formData.append('image', bidData.image);
+  for (let entry of formData.entries()) {
+    console.log(entry[0] + ": " + entry[1]);
+  }
+
   return fetch('/api/bids', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(bidData),
+    //'Content-Type': 'application/json',
+    //headers: {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'},
+    body: formData,
   });
 };
