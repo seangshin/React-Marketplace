@@ -32,18 +32,6 @@ const Profile = () => {
       const results = await data.json();
       console.log(results);
     }
-    // try {
-    //   console.log(bidData);
-    //   const formData = new FormData();
-    //   formData.append('name', bidData.name);
-    //   formData.append('description', bidData.description);
-    //   formData.append('price', bidData.price);
-    //   formData.append('image', bidData.image);
-    //   console.log(formData);
-
-    //   const data = await createBid(formData);
-    //   console.log(data);
-    // }
     catch(err){
       console.log(JSON.stringify(err));
     };
