@@ -53,7 +53,7 @@ const Profile = () => {
 
   return(
     <>
-      <Form onSubmit={handleForm} enctype="multipart/form-data" action="/upload" method="POST"> 
+      <Form onSubmit={handleForm} enctype="multipart/form-data" action="/api/bids" method="post"> 
         <Form.Group controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control 
