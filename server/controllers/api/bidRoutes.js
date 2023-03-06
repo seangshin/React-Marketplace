@@ -25,15 +25,14 @@ router.get('/', async (req, res) => {
 
 router.post('/', upload, async (req, res) => {
  
-  // res.end('File is uploaded.');
-  //   console.log(req.file);
-  //   console.log(req.body);
+  console.log(req.file);
+  console.log(req.body);
 
   try {
     const newBid = await Bid.create({
       ...req.body,
       user_id: req.session.user_id,
-      image: req.file ? '/images/' + req.file.name : null, // save image path to database if it exists
+      image: req.file ? '/uploads/' + req.file.filename : null, // save image path to database if it exists
     });
 
     res.status(200).json(newBid);

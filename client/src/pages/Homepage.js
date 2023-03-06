@@ -35,7 +35,7 @@ const Homepage = () => {
             if(bid) {
               return (
                 <Card key={bid.id} border='border-bottom border-warning' className="cardbody-css">
-                  {/* <Card.Img src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${restaurant.photo}&key=AIzaSyDEHGBibTeuDpUclYDLNXIAZ0J7NKWewJw`} alt={`The image for ${restaurant.restaurantName}`} variant='top' /> */}
+                  <Card.Img src={`${bid.image}`} alt={`The image for ${bid.name}`} variant='top' />
                   <Card.Body className='text-center'>
                     <Card.Title className="cardtitle m-2">{bid.name}</Card.Title>
                     <Card.Subtitle className="cardprice  m-2">
