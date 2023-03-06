@@ -49,14 +49,13 @@ export const createBid = (bidData) => {
   formData.append('description', bidData.description);
   formData.append('price', bidData.price);
   formData.append('image', bidData.image);
+  
   for (let entry of formData.entries()) {
     console.log(entry[0] + ": " + entry[1]);
   }
 
   return fetch('/api/bids', {
     method: 'POST',
-    //'Content-Type': 'application/json',
-    //headers: {'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'},
     body: formData,
   });
 };
