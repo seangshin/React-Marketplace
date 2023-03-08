@@ -1,10 +1,5 @@
-export const getMe = (token) => {
-  return fetch('/api/users/me', {
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-  });
+export const getMe = () => {
+  return fetch('/api/bids/profile');
 };
 
 export const createUser = (userData) => {
