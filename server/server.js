@@ -35,6 +35,6 @@ app.use(upload); // Add Multer to handle image uploads
 app.use(express.static(path.join(__dirname, 'public'))); //*********
 
 // sync sequelize models to the database, then turn on the server
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`Sever listening on http://localhost:${PORT}`));
 });

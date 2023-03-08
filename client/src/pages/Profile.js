@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-import { createBid } from '../utils/API';
+import { Button, Card, CardColumns, Col, Container, Form, Jumbotron,Modal } from 'react-bootstrap';
+import { getMe, createBid } from '../utils/API';
 import Auth from '../utils/auth';
+import BidTab from '../components/BidTab';
 
 const Profile = () => {
   const [bidData, setBidData] = useState({name: '', description: '', price: '', image: null});
+  //const [myBids, setMyBids] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,10 +40,32 @@ const Profile = () => {
     };
 
     setBidData({name: '', description: '', price: '', image: null});
+    setShowModal(false);
   };
 
   return(
     <>
+    <Jumbotron>
+      <h2>Your Account</h2>
+    </Jumbotron>
+    
+    <div className='pb-3 pl-3'>
+      <Button variant="secondary" onClick={() => setShowModal(true)}>+ New Bid</Button>
+    </div>
+    
+    <BidTab />
+
+    {/* set modal data up */}
+    <Modal
+        size='lg'
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby='signup-modal'>
+        {/* tab container to do either signup or login component */}
+        <Modal.Header closeButton>
+        <Modal.Title>Create a new bid</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
       <Form onSubmit={handleForm} enctype="multipart/form-data" action="/api/bids" method="post"> 
         <Form.Group controlId="formBasicName">
           <Form.Label>Name</Form.Label>
@@ -78,10 +103,14 @@ const Profile = () => {
           <Form.Control type="file" name="image" onChange={handleImageChange} />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
       </Form>  
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="primary" onClick={handleForm}>
+          Submit 
+        </Button>
+      </Modal.Footer>
+      </Modal>
     </>
   );
 };

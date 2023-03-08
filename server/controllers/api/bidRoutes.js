@@ -9,14 +9,30 @@ const fs = require('fs');
 router.get('/', async (req, res) => {
   try {
     // Get all posts and JOIN with user data
-    // const bidData = await Bid.findAll();
     const bidData = await Bid.findAll({
       include: [{ model: User }],
     });
     //Serialize data so the template can read it
     const bids = bidData.map((bid) => bid.get({ plain: true }));
     
-    res.status(200).json(bids)
+    res.status(200).json(bids);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/profile', async (req, res) => {
+  try {
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Bid }],
+    });
+
+    const user = userData.get({ plain: true });
+    console.log(user);
+
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
   }
