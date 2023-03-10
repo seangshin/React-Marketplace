@@ -49,11 +49,13 @@ const Profile = () => {
       <h2>Your Account</h2>
     </Jumbotron>
     
-    <div className='pb-3 pl-3'>
+    <div>
+    <div className='pb-4 pl-4'>
       <Button variant="secondary" onClick={() => setShowModal(true)}>+ New Bid</Button>
     </div>
     
     <BidTab />
+    </div>
 
     {/* set modal data up */}
     <Modal

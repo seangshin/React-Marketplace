@@ -1,0 +1,25 @@
+[
+  {
+    "username": "sgshin",
+    "email": "shin.sean@hotmail.com",
+    "password": "password123"
+  },
+  {
+    "username": "marketuser",
+    "email": "fake@email.com",
+    "password": "password123"
+  }
+]
+
+[
+  {
+    "name": "2020 GMC Yukon",
+    "description": "Used, like new. 50,000 miles. New tires.",
+    "price": "10000"
+  },
+  {
+    "name": "Cyberpower PC",
+    "description": "Intel Core i7-12700F 2.1GHz, GeForce RTX 3060 12GB, 16GB DDR4, 1TB NVMe SSD, WiFi & Win 11 Home",
+    "price": "1400"
+  }
+]

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
+import SearchBar from './SearchBar';
 import Cart from './Cart';
 import Auth from '../utils/auth';
 
@@ -14,19 +15,25 @@ const Navigation = () => {
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-        <Navbar.Brand as={Link} to='/'>
-          <img
-            alt=""
-            src="./market.png"
-            width="50"
-            height="50"
-            className="d-inline-block center"
-          />
-          Marketplace
-        </Navbar.Brand>
+          <Navbar.Brand as={Link} to='/'>
+            <img
+              alt=""
+              src="./assets/market.png"
+              width="50"
+              height="50"
+              className="d-inline-block center"
+            />
+            <span className="ml-2">Marketplace</span>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
-            <Nav className='ml-auto'>
+
+            <SearchBar />
+
+            <Nav 
+              className="ml-auto"
+              style={{ maxHeight: '100px' }}
+              navbar>
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
@@ -41,6 +48,7 @@ const Navigation = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      
       {/* set modal 1 data up */}
       <Modal
         size='lg'

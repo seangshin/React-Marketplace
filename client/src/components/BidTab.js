@@ -30,7 +30,7 @@ const BidTab = () => {
   }, []);
 
   return (
-    <Container>
+    
     <Tabs
       defaultActiveKey="bids"
       id="categories"
@@ -38,16 +38,16 @@ const BidTab = () => {
     >
       <Tab eventKey="bids" title="Bids">
       {myBids.length ? (
-        <Container className='container-profile'>
+        <Container>
         <CardColumns>
           {myBids.map((bid) => {
             if(bid) {
               return (
-                <Card key={bid.id} border='border-bottom border-warning' className="cardbody-css" style={{margin: '1rem'}}>
+                <Card key={bid.id} style={{margin: '1rem'}}>
                   <Card.Img src={`${bid.image}`} alt={`The image for ${bid.name}`} variant='top' />
                   <Card.Body className='text-center'>
-                    <Card.Title className="cardtitle m-2">{bid.name}</Card.Title>
-                    <Card.Subtitle className="cardprice  m-2">
+                    <Card.Title className="m-2">{bid.name}</Card.Title>
+                    <Card.Subtitle className="m-2">
                     <i className="fa-solid fa-wallet"></i> {`Bid Price: ${bid.price}`}
                     </Card.Subtitle>
                     <Card.Subtitle className="cardrating  m-2"><i className="fa-solid fa-certificate"></i> {`Description: ${bid.description}`}
@@ -84,7 +84,7 @@ const BidTab = () => {
         </Container>
       </Tab>
     </Tabs>
-    </Container>
+    
   );
 }
 
