@@ -13,14 +13,17 @@ const sequelize = process.env.JAWSDB_URL
     dialectOptions: {
       decimalNumbers: true,
     },
-  });
+});
 
-  const credentials = process.env.JAWSDB_EMAIL
-    ? { user: process.env.JAWSDB_EMAIL, pass: process.env.JAWSDB_PASS }
-    : { user: process.env.EMAIL, pass: process.env.PASS }
+const credentials = process.env.JAWSDB_EMAIL
+? { user: process.env.JAWSDB_EMAIL, pass: process.env.JAWSDB_PASS }
+: { user: process.env.EMAIL, pass: process.env.PASS };
+
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
-  service: 'hotmail',
+  host: 'smtp.zoho.com',
+  port: 465,
+  secure: true, // use SSL
   auth: credentials,
 });
 

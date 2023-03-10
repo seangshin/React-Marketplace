@@ -20,8 +20,8 @@ router.post('/', async (req, res) => {
     var mailOptions = {
       from: process.env.EMAIL,
       to: req.body.email,
-      subject: 'Welcome to EMARKET',
-      text: `${req.body.name}, thank you for registering with EMARKET.`
+      subject: 'Welcome to Marketplace',
+      text: `${req.body.username}, thank you for registering with Marketplace.`
     };
     
     transporter.sendMail(mailOptions, (error, info) => {
