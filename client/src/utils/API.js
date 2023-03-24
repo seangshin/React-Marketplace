@@ -43,3 +43,14 @@ export const createBid = (bidData) => {
     body: formData,
   });
 };
+
+export const addToCart = (bidId) => {
+  console.log(bidId);
+  return fetch('/api/users/addToCart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ bidId }),
+  });
+};

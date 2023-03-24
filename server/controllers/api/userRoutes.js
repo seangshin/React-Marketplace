@@ -1,11 +1,13 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Bid } = require('../../models');
 const { transporter } = require('../../config/connection');
 
 // Create new user
 router.post('/', async (req, res) => {
   try {
+    // const {username, email, password, myCart = [] } = req.body;
     // creates object based on the request body and stores in database
+    // const userData = await User.create({ username, email, password, myCart });
     const userData = await User.create(req.body);
 
     // Set up sessions with a 'loggedIn' variable set to true and 'userId variable set to id from request body 
@@ -83,5 +85,23 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
+router.post('/addToCart', async (req, res) => {
+  try {
+    // const updatedUser = await User.update({ bid_id: req.body.bid_id }, { where: { id: req.params.id } });
+    // res.status(200).json(updatedUser);
+    console.log(req.session);
+    console.log(req.body);
+
+    const user = await User.findByPk(req.session.user_id);
+    const bid = await Bid.findByPk(req.body.bidId);
+
+    await user.addBid(bid, { through: { quantity: 1 } });
+
+    res.status(200);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+})
 
 module.exports = router;

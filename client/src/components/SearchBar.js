@@ -29,7 +29,7 @@ function SearchBar() {
           aria-label="Search"
           style={{ width: '50vw' }}
         />
-        <Button onClick={handleSearch} className="ml-2" variant="outline-success"><i class="fa-solid fa-magnifying-glass"></i></Button>
+        <Button onClick={handleSearch} className="ml-2" variant="outline-success"><i className="fa-solid fa-magnifying-glass"></i></Button>
       </Form>
     </div>
   );
