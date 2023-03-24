@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns, CardGroup, Carousel, Row } from 'react-bootstrap';
-import { getBids } from '../utils/API';
+import { getBids, addToCart } from '../utils/API';
 import Auth from '../utils/auth';
 import '../styles/style.css';
 
 const Homepage = () => {
   const [bids, setBids] = useState('');
   
-  const handleViewBid = async (bidId) => {
-    console.log(`view selected for bid ${bidId}`);
+  const handleAddToCart = async (bidId) => {
+    console.log(`view selected for bid ${bidId}`);//debug
+
+    try {
+      const response = await addToCart(bidId);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -62,7 +68,7 @@ const Homepage = () => {
                 <Card.Header>
                   <Row>
                     <Col>{bid.name}</Col>
-                    <Col className="text-right"><i class="fa-solid fa-dollar-sign"></i>{`${bid.price}`}</Col>
+                    <Col className="text-right"><i className="fa-solid fa-dollar-sign"></i>{`${bid.price}`}</Col>
                   </Row>
                 </Card.Header>
                 <Card.Img src={`${bid.image}`} alt={`The image for ${bid.name}`} variant='top' />
@@ -76,8 +82,8 @@ const Homepage = () => {
                   <Button 
                     className='btn-info center save-btn-css m-2'
                     variant="secondary" size="sm"
-                    onClick={() => handleViewBid(bid.id)}>
-                      View
+                    onClick={() => handleAddToCart(bid.id)}>
+                      Add to Cart
                   </Button>
                 )}
                 </Card.Body>

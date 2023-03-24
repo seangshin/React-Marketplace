@@ -39,6 +39,10 @@ User.init(
         len: [8],
       },
     },
+    // myCart: {
+    //   type: DataTypes.ARRAY(DataTypes.INTEGER),
+    //   defaultValue: [],
+    // },
   },
   {
     //adding hook to hash the user password and save to newUserData, before a new instance is created and existing data, before updating the database
