@@ -86,7 +86,7 @@ router.post('/logout', (req, res) => {
   }
 });
 
-router.post('/addToCart', async (req, res) => {
+router.post('/cart', async (req, res) => {
   try {
     // const updatedUser = await User.update({ bid_id: req.body.bid_id }, { where: { id: req.params.id } });
     // res.status(200).json(updatedUser);
@@ -102,6 +102,27 @@ router.post('/addToCart', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
-})
+});
+
+router.get('/cart', async (req, res) => {
+  try {
+    const user = await User.findByPk(req.session.user_id, {
+      include: {
+        model: Bid,
+        through: { attributes: ['quantity'] },
+      },
+    });
+
+    const bidData = user.bids.map((bid) => bid.get({ plain: true }));
+
+    console.log(user);//debug
+    console.log(`bids: \n ${user.bids}`);//debug
+    console.log(`bids: \n ${JSON.stringify(bidData, null, 2)}`);//debug
+    
+    res.status(200).json(bidData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 module.exports = router;

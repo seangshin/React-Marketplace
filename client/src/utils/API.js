@@ -46,11 +46,15 @@ export const createBid = (bidData) => {
 
 export const addToCart = (bidId) => {
   console.log(bidId);
-  return fetch('/api/users/addToCart', {
+  return fetch('/api/users/cart', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ bidId }),
   });
+};
+
+export const viewCart = () => {
+  return fetch('/api/users/cart');
 };
