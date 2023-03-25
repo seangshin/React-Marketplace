@@ -13,13 +13,10 @@ const BidTab = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        //const response = await getBids();
-        //const results = await response.json();
-
         const myData = await getMe();
         const myResults = await myData.json();
         
-        console.log(myResults);
+        console.log(myResults);//debug
         setMyBids(myResults.bids);
         
       } catch (err) {
