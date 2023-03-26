@@ -54,11 +54,19 @@ const Cart = () => {
     }
   };
 
+  const handleCheckout = async () => {
+    try {
+      console.log('checkout selected');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       {cartItems.length ? (
         <div>
-          
+
           <Table striped bordered hover>
           <thead>
             <tr>
@@ -75,7 +83,7 @@ const Cart = () => {
               <td>{item.name}</td>
               <td>1</td>
               <td>{item.price}</td>
-              <td><Button className='btn-danger center save-btn-css m-2' onClick={() => handleRemoveItem(item.id)}>Remove</Button></td>
+              <td><Button className='btn-danger center save-btn-css m-2' onClick={() => handleRemoveItem(item.id)}><i className="fa-solid fa-trash"></i></Button></td>
             </tr>
           ))}
           </tbody>
@@ -85,6 +93,7 @@ const Cart = () => {
             <p>Subtotal: ${subtotal}</p>
             <p>Tax (6%): ${tax}</p>
             <p>Total: ${total}</p>
+            <Button className='btn-info' onClick={() => handleCheckout()}>Checkout</Button>
           </div>
 
         </div>

@@ -63,7 +63,7 @@ const BidTab = () => {
                       className='btn-danger center save-btn-css m-2'
                       variant="secondary" size="sm"
                       onClick={() => handleDeleteBid(bid.id)}>
-                       Delete
+                       <i className="fa-solid fa-trash"></i>
                     </Button>
                   )}
                   </Card.Body>
