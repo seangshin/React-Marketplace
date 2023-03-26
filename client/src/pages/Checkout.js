@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Container, Col, Form, Row } from 'react-bootstrap';
 //import PaymentForm from '../components/PaymentForm';
 
 const Checkout = () => {
-  const [formData, setformData] = useState({cardNumber: null, expDate: null, cvc: null, name: '', address: ''});
+  const [formData, setformData] = useState({cardNumber: '', expDate: '', cvc: '', name: '', address: ''});
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -31,66 +31,78 @@ const Checkout = () => {
       console.log(JSON.stringify(err));
     };
 
-    setformData({name: '', description: '', price: 0, image: null});
+    setformData({cardNumber: '', expDate: '', cvc: '', name: '', address: ''});
   }
 
   return(
     <>
-      <Form onSubmit={handleForm}> 
-          <Form.Group controlId="formBasicCardNumber">
-            <Form.Label>Card Number</Form.Label>
-            <Form.Control 
-            type="text" 
-            name="name"
-            value= {formData.cardNumber}
-            placeholder="Card number" 
-            onChange={handleInputChange}
-            />
-          </Form.Group>
+    <div className="d-flex justify-content-center align-items-center vh-100">
+    <Container fluid>
+      <Row>
+        <Col className='p-5' style={{ backgroundColor: 'lightblue' }} md={{ span: 4, offset: 4 }}>
+        <Form onSubmit={handleForm}> 
+        <Form.Group controlId="formBasicCardNumber">
+          <Form.Label>Card Number</Form.Label>
+          <Form.Control 
+          type="text" 
+          name="cardNumber"
+          value= {formData.cardNumber}
+          placeholder="Card number" 
+          onChange={handleInputChange}
+          />
+        </Form.Group>
 
-          <Form.Group controlId="formBasicExpDate">
-            <Form.Label>Expiration Date</Form.Label>
-            <Form.Control 
-            type="text" 
-            name="expDate"
-            value= {formData.expDate}
-            placeholder="MM/YYYY"  
-            onChange={handleInputChange}/>
-          </Form.Group>
+        <Form.Group controlId="formBasicExpDate">
+          <Form.Label>Expiration Date</Form.Label>
+          <Form.Control 
+          type="text" 
+          name="expDate"
+          value= {formData.expDate}
+          placeholder="MM/YYYY"  
+          onChange={handleInputChange}/>
+        </Form.Group>
 
-          <Form.Group controlId="formBasicCVC">
-            <Form.Label>Security Code</Form.Label>
-            <Form.Control 
-            type="number" 
-            name="CVC"
-            value= {formData.cvc}
-            placeholder="Security code"  
-            onChange={handleInputChange}/>
-          </Form.Group>
+        <Form.Group controlId="formBasicCVC">
+          <Form.Label>Security Code</Form.Label>
+          <Form.Control 
+          type="number" 
+          name="cvc"
+          value= {formData.cvc}
+          placeholder="Security code"  
+          onChange={handleInputChange}/>
+        </Form.Group>
 
-          <Form.Group controlId="formBasicName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control 
-            type="text" 
-            name="name"
-            value= {formData.name}
-            placeholder="Cardholder's name" 
-            onChange={handleInputChange}
-            />
-          </Form.Group>
+        <Form.Group controlId="formBasicName">
+          <Form.Label>Name</Form.Label>
+          <Form.Control 
+          type="text" 
+          name="name"
+          value= {formData.name}
+          placeholder="Cardholder's name" 
+          onChange={handleInputChange}
+          />
+        </Form.Group>
 
-          <Form.Group controlId="formBasicAddress">
-            <Form.Label>Address</Form.Label>
-            <Form.Control 
-            type="text" 
-            name="address"
-            value= {formData.address}
-            placeholder="Billing address" 
-            onChange={handleInputChange}
-            />
-          </Form.Group>
-
-        </Form>
+        <Form.Group controlId="formBasicAddress">
+          <Form.Label>Address</Form.Label>
+          <Form.Control 
+          type="text" 
+          name="address"
+          value= {formData.address}
+          placeholder="Billing address" 
+          onChange={handleInputChange}
+          />
+        </Form.Group>
+          <Button disabled={!(formData.cardNumber && formData.expDate && formData.cvc && formData.name && formData.address)}
+            type='submit'
+            variant='success'>
+            Submit
+          </Button>
+      </Form>
+        </Col>
+      </Row>
+    </Container>
+    </div>
     </>
   );
 };

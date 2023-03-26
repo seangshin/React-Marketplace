@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
@@ -10,6 +10,14 @@ import Auth from '../utils/auth';
 const Navigation = () => {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLoggedIn(Auth.loggedIn());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleModal2 = () => {
     setShowModal2(false);
@@ -39,7 +47,7 @@ const Navigation = () => {
               style={{ maxHeight: '100px' }}
               navbar>
               {/* if user is logged in show saved books and logout */}
-              {Auth.loggedIn() ? (
+              {loggedIn ? (
                 <>
                   <Nav.Link as={Link} to='/profile'>Profile</Nav.Link>
                   <Nav.Link onClick={() => setShowModal2(true)}>My Cart</Nav.Link>
