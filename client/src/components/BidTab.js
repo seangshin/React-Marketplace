@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, CardColumns, Container, Tab, Tabs } from 'react-bootstrap';
-import { getMe, createBid } from '../utils/API';
+import { getMe, removeBid } from '../utils/API';
 import Auth from '../utils/auth';
 
 const BidTab = () => {
@@ -8,6 +8,17 @@ const BidTab = () => {
 
   const handleDeleteBid = async (bidId) => {
     console.log(`view selected for bid ${bidId}`);
+
+    try {
+      // Remove the item from the cart in React app state
+      const updatedBids = myBids.filter(bid => bid.id !== bidId);
+      setMyBids(updatedBids);
+
+      // Send a request to your server to update the cart model in the database
+      await removeBid(bidId);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
@@ -17,8 +28,7 @@ const BidTab = () => {
         const myResults = await myData.json();
         
         console.log(myResults);//debug
-        setMyBids(myResults.bids);
-        
+        setMyBids(myResults);
       } catch (err) {
         console.log(err);
       }
@@ -27,7 +37,6 @@ const BidTab = () => {
   }, []);
 
   return (
-    
     <Tabs
       defaultActiveKey="bids"
       id="categories"

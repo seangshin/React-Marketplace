@@ -44,6 +44,15 @@ export const createBid = (bidData) => {
   });
 };
 
+export const removeBid = (bidId) => {
+  return fetch(`/api/bids/${bidId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
 export const addToCart = (bidId) => {
   console.log(bidId);
   return fetch('/api/users/cart', {
@@ -57,4 +66,13 @@ export const addToCart = (bidId) => {
 
 export const viewCart = () => {
   return fetch('/api/users/cart');
+};
+
+export const removeFromCart = (itemId) => {
+  return fetch(`/api/users/cart/${itemId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 };
