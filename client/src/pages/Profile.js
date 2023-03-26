@@ -5,8 +5,7 @@ import Auth from '../utils/auth';
 import BidTab from '../components/BidTab';
 
 const Profile = () => {
-  const [bidData, setBidData] = useState({name: '', description: '', price: '', image: null});
-  //const [myBids, setMyBids] = useState('');
+  const [bidData, setBidData] = useState({name: '', description: '', price: 0, image: null});
   const [showModal, setShowModal] = useState(false);
 
   const handleInputChange = (event) => {
@@ -39,7 +38,7 @@ const Profile = () => {
       console.log(JSON.stringify(err));
     };
 
-    setBidData({name: '', description: '', price: '', image: null});
+    setBidData({name: '', description: '', price: 0, image: null});
     setShowModal(false);
   };
 
@@ -93,10 +92,10 @@ const Profile = () => {
         <Form.Group controlId="formBasicPrice">
           <Form.Label>Price</Form.Label>
           <Form.Control 
-          type="text" 
+          type="number" 
           name="price"
           value= {bidData.price}
-          placeholder="Enter a starting price."  
+          placeholder="Enter a price."  
           onChange={handleInputChange}/>
         </Form.Group>
 

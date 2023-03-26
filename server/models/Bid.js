@@ -19,7 +19,7 @@ Bid.init(
       type: DataTypes.STRING,
     },
     price: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
     user_id: {
