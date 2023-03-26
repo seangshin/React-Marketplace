@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, CardColumns, Col, Container, Form, Jumbotron,Modal } from 'react-bootstrap';
-import { getMe, createBid } from '../utils/API';
+import { Button,  Form, Jumbotron,Modal } from 'react-bootstrap';
+import { createBid } from '../utils/API';
 import Auth from '../utils/auth';
 import BidTab from '../components/BidTab';
 

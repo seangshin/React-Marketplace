@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { viewCart, removeFromCart } from '../utils/API';
+import { Link } from 'react-router-dom';
 
-const Cart = () => {
+const Cart = (props) => {
   const [cartItems, setCartItems] = useState('');
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
+  const { showModal2, handleModal2 } = props;
 
   useEffect(() => {
     async function fetchData() {
@@ -93,7 +95,7 @@ const Cart = () => {
             <p>Subtotal: ${subtotal}</p>
             <p>Tax (6%): ${tax}</p>
             <p>Total: ${total}</p>
-            <Button className='btn-info' onClick={() => handleCheckout()}>Checkout</Button>
+            <Link to="/checkout"><Button onClick={handleModal2} className='btn-info'>Checkout</Button></Link>
           </div>
 
         </div>
