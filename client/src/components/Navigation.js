@@ -38,7 +38,7 @@ const Navigation = () => {
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/profile'>Profile</Nav.Link>
-                  <Nav.Link onClick={() => setShowModal2(true)}>Cart ( {} )</Nav.Link>
+                  <Nav.Link onClick={() => setShowModal2(true)}>My Cart</Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (

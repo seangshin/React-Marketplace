@@ -4,15 +4,26 @@ import { viewCart, removeFromCart } from '../utils/API';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState('');
+  const [subtotal, setSubtotal] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const myData = await viewCart();
         const myResults = await myData.json();
-        
-        console.log(myResults);
         setCartItems(myResults);
+
+        const getSubtotal = myResults.reduce((acc, item) => acc + item.price, 0);
+        setSubtotal(getSubtotal);
+
+        const getTax = getSubtotal * 0.06;
+        setTax(getTax);
+
+        const getTotal = getSubtotal + getTax;
+        setTotal(getTotal);
+
       } catch (err) {
         console.log(err);
       }
@@ -26,6 +37,16 @@ const Cart = () => {
       const updatedCartItems = cartItems.filter(item => item.id !== itemId);
       setCartItems(updatedCartItems);
 
+      //recalculate cart subtotal, tax, and total
+      const getSubtotal = updatedCartItems.reduce((acc, item) => acc + item.price, 0);
+      setSubtotal(getSubtotal);
+
+      const getTax = getSubtotal * 0.06;
+      setTax(getTax);
+
+      const getTotal = getSubtotal + getTax;
+      setTotal(getTotal);
+
       // Send a request to your server to update the cart model in the database
       await removeFromCart(itemId);
     } catch (err) {
@@ -36,28 +57,37 @@ const Cart = () => {
   return (
     <>
       {cartItems.length ? (
-        <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Qty</th>
-            <th colSpan={2}>Price</th>
-          </tr>
-        </thead>
-        <tbody>
+        <div>
+          
+          <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Qty</th>
+              <th colSpan={2}>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cartItems.map((item, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{item.name}</td>
+              <td>1</td>
+              <td>{item.price}</td>
+              <td><Button className='btn-danger center save-btn-css m-2' onClick={() => handleRemoveItem(item.id)}>Remove</Button></td>
+            </tr>
+          ))}
+          </tbody>
+          </Table>
 
-          {cartItems.map((item, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{item.name}</td>
-            <td>1</td>
-            <td>{item.price}</td>
-            <td><Button className='btn-danger center save-btn-css m-2' onClick={() => handleRemoveItem(item.id)}>Remove</Button></td>
-          </tr>
-        ))}
-        </tbody>
-        </Table>
+          <div className="text-right">
+            <p>Subtotal: ${subtotal}</p>
+            <p>Tax (6%): ${tax}</p>
+            <p>Total: ${total}</p>
+          </div>
+
+        </div>
         ) : (
           <div>No items in your cart.</div>
         )}
