@@ -83,6 +83,7 @@ router.post('/logout', (req, res) => {
   }
 });
 
+// route to add an item to the cart
 router.post('/cart', async (req, res) => {
   try {
     // debug
@@ -100,6 +101,7 @@ router.post('/cart', async (req, res) => {
   }
 });
 
+// route to get all items in the cart
 router.get('/cart', async (req, res) => {
   try {
     const user = await User.findByPk(req.session.user_id, {
@@ -122,6 +124,7 @@ router.get('/cart', async (req, res) => {
   }
 });
 
+// route to delete an item from the cart
 router.delete('/cart/:bidId', async (req, res) => {
   try {
     const user = await User.findByPk(req.session.user_id);
@@ -132,6 +135,30 @@ router.delete('/cart/:bidId', async (req, res) => {
     res.status(200).json({ message: 'Item removed from cart successfully' });
   } catch (err) {
     res.status(400).json(err);
+  }
+});
+
+// route to create a checkout transaction
+router.post('/checkout', async (req, res) => {
+  try {
+    const { amount, currency, paymentMethod } = req.body;
+
+    // Validate payment details here (e.g., check that the amount is a valid number)
+
+    // Create a new Stripe payment object
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency,
+      payment_method: paymentMethod,
+      confirm: true,
+    });
+
+    // Return a response to the client indicating that the payment was successful
+    res.json({ success: true });
+  } catch (err) {
+    // Handle errors here (e.g., return an error message to the client)
+    console.error(error);
+    res.json({ success: false, error: error.message });
   }
 });
 

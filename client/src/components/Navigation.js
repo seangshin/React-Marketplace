@@ -11,6 +11,10 @@ const Navigation = () => {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
+  const handleModal2 = () => {
+    setShowModal2(false);
+  }
+
   return (
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>
@@ -94,7 +98,7 @@ const Navigation = () => {
           </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Cart />
+            <Cart showModal2={showModal2} handleModal2={handleModal2} />
           </Modal.Body>
         </Modal>
     </>
