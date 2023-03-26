@@ -5,9 +5,6 @@ const { transporter } = require('../../config/connection');
 // Create new user
 router.post('/', async (req, res) => {
   try {
-    // const {username, email, password, myCart = [] } = req.body;
-    // creates object based on the request body and stores in database
-    // const userData = await User.create({ username, email, password, myCart });
     const userData = await User.create(req.body);
 
     // Set up sessions with a 'loggedIn' variable set to true and 'userId variable set to id from request body 
@@ -88,10 +85,9 @@ router.post('/logout', (req, res) => {
 
 router.post('/cart', async (req, res) => {
   try {
-    // const updatedUser = await User.update({ bid_id: req.body.bid_id }, { where: { id: req.params.id } });
-    // res.status(200).json(updatedUser);
-    console.log(req.session);
-    console.log(req.body);
+    // debug
+    // console.log(req.session);
+    // console.log(req.body);
 
     const user = await User.findByPk(req.session.user_id);
     const bid = await Bid.findByPk(req.body.bidId);
@@ -115,11 +111,25 @@ router.get('/cart', async (req, res) => {
 
     const bidData = user.bids.map((bid) => bid.get({ plain: true }));
 
-    console.log(user);//debug
-    console.log(`bids: \n ${user.bids}`);//debug
-    console.log(`bids: \n ${JSON.stringify(bidData, null, 2)}`);//debug
+    // debug
+    // console.log(user);
+    // console.log(`bids: \n ${user.bids}`);
+    // console.log(`bids: \n ${JSON.stringify(bidData, null, 2)}`);
     
     res.status(200).json(bidData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.delete('/cart/:bidId', async (req, res) => {
+  try {
+    const user = await User.findByPk(req.session.user_id);
+    const bid = await Bid.findByPk(req.params.bidId);
+
+    await user.removeBid(bid);
+
+    res.status(200).json({ message: 'Item removed from cart successfully' });
   } catch (err) {
     res.status(400).json(err);
   }

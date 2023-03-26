@@ -23,16 +23,18 @@ router.get('/', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Bid }],
+    const bidData = await Bid.findAll({
+      include: [{ model: User }],
     });
+    //Serialize data so the template can read it
+    const bids = bidData.map((bid) => bid.get({ plain: true }));
+    const myBids = bids.filter((bid) => bid.user_id === req.session.user_id);
 
-    const user = userData.get({ plain: true });
-    console.log(user);
+    //debug
+    // console.log(`bids: ${JSON.stringify(bids, null, 2)}`);
+    // console.log(`myBids: ${JSON.stringify(myBids, null, 2)}`);
 
-    res.status(200).json(user);
+    res.status(200).json(myBids);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -40,10 +42,9 @@ router.get('/profile', async (req, res) => {
 
 
 router.post('/', upload, async (req, res) => {
- 
-  console.log(req.file);
-  console.log(req.body);
-
+  // debugging
+  // console.log(req.file);
+  // console.log(req.body);
   try {
     const newBid = await Bid.create({
       ...req.body,
@@ -60,7 +61,25 @@ router.post('/', upload, async (req, res) => {
     console.log(err);
     res.status(400).json(err);
   }
-  
+});
+
+router.delete('/:bidId', async (req, res) => {
+  try {
+    const bidData = await Bid.destroy({
+      where: {
+        id: req.params.bidId
+      }
+    });
+
+    if(!bidData) {
+      res.status(404).json({ message: 'No location found with this id!'});
+      return;
+    }
+
+    res.status(200).json({ message: 'Item removed successfully' });
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
-import { viewCart } from '../utils/API';
+import { viewCart, removeFromCart } from '../utils/API';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState('');
@@ -19,6 +19,19 @@ const Cart = () => {
     }
     fetchData();
   }, []);
+
+  const handleRemoveItem = async (itemId) => {
+    try {
+      // Remove the item from the cart in React app state
+      const updatedCartItems = cartItems.filter(item => item.id !== itemId);
+      setCartItems(updatedCartItems);
+
+      // Send a request to your server to update the cart model in the database
+      await removeFromCart(itemId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -40,7 +53,7 @@ const Cart = () => {
             <td>{item.name}</td>
             <td>1</td>
             <td>{item.price}</td>
-            <td><Button className='btn-danger center save-btn-css m-2'>Remove</Button></td>
+            <td><Button className='btn-danger center save-btn-css m-2' onClick={() => handleRemoveItem(item.id)}>Remove</Button></td>
           </tr>
         ))}
         </tbody>
