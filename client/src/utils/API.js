@@ -76,3 +76,13 @@ export const removeFromCart = (itemId) => {
     },
   });
 };
+
+export const checkout = (userData) => {
+  return fetch('/api/users/checkout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+};
