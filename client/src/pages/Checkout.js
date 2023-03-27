@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Col, Form, Row } from 'react-bootstrap';
-//import PaymentForm from '../components/PaymentForm';
+import { checkout } from '../utils/API';
 
 const Checkout = () => {
-  const [formData, setformData] = useState({cardNumber: '', expDate: '', cvc: '', name: '', address: ''});
+  const [formData, setFormData] = useState({ cardNumber: '', expDate: '', cvc: '', name: '', address: '', amount: 0.01 });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setformData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleForm = async (event) => {
@@ -22,7 +22,7 @@ const Checkout = () => {
 
     try {
       console.log(formData);
-      // const data = await createBid(formData);
+      // const data = await checkout(formData);
       // //Auth.login(data.login.token)
       // const results = await data.json();
       // console.log(results);
@@ -31,7 +31,7 @@ const Checkout = () => {
       console.log(JSON.stringify(err));
     };
 
-    setformData({cardNumber: '', expDate: '', cvc: '', name: '', address: ''});
+    setFormData({cardNumber: '', expDate: '', cvc: '', name: '', address: ''});
   }
 
   return(

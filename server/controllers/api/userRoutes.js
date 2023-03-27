@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { User, Bid } = require('../../models');
 const { transporter } = require('../../config/connection');
+const stripe = require('../../config/stripe');
 
 // Create new user
 router.post('/', async (req, res) => {
@@ -139,26 +140,36 @@ router.delete('/cart/:bidId', async (req, res) => {
 });
 
 // route to create a checkout transaction
+//****************************************************************************** */
+// Create a token from card information in the request body using the stripe library.
 router.post('/checkout', async (req, res) => {
   try {
-    const { amount, currency, paymentMethod } = req.body;
+    const { cardNumber, expDate, cvc, name, address, amount } = req.body;
 
-    // Validate payment details here (e.g., check that the amount is a valid number)
-
-    // Create a new Stripe payment object
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency,
-      payment_method: paymentMethod,
-      confirm: true,
+    // Create a Stripe token for the card information
+    const { token } = await stripe.tokens.create({
+      card: {
+        number: cardNumber,
+        exp_month: expDate.split('/')[0],
+        exp_year: expDate.split('/')[1],
+        cvc: cvc,
+        name: name,
+      },
     });
 
-    // Return a response to the client indicating that the payment was successful
-    res.json({ success: true });
+    // Use the token to create a charge
+    const charge = await stripe.charges.create({
+      amount,
+      currency: 'usd',
+      source: token.id,
+      description: 'Example charge',
+    });
+
+    res.status(200).send('Payment processed successfully');
   } catch (err) {
     // Handle errors here (e.g., return an error message to the client)
-    console.error(error);
-    res.json({ success: false, error: error.message });
+    console.error(err);
+    res.status(400).json({ success: false, error: err.message });
   }
 });
 
