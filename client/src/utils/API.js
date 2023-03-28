@@ -93,11 +93,13 @@ export const removeFromCart = (itemId, token) => {
   });
 };
 
-export const checkout = (userData) => {
+export const checkout = (userData, token) => {
+  console.log('checkout');
   return fetch('/api/cart/checkout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(userData),
   });
