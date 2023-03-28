@@ -24,7 +24,7 @@ const Checkout = () => {
 
     try {
       console.log(formData);
-      // const data = await checkout(formData);
+      const data = await checkout(formData, token);
       // //Auth.login(data.login.token)
       // const results = await data.json();
       // console.log(results);

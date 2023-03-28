@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Form, Table } from 'react-bootstrap';
 import { viewCart, removeFromCart } from '../utils/API';
 import { Link, useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
@@ -60,14 +60,6 @@ const Cart = (props) => {
     }
   };
 
-  const handleCheckout = async () => {
-    try {
-      console.log('checkout selected');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <>
       {cartItems.length ? (
@@ -99,7 +91,11 @@ const Cart = (props) => {
             <p>Subtotal: ${subtotal}</p>
             <p>Tax (6%): ${tax}</p>
             <p>Total: ${total}</p>
-            <Link to="/checkout"><Button onClick={handleModal2} className='btn-info'>Checkout</Button></Link>
+            <Form onSubmit={handleModal2} action="/api/cart/checkout" method="POST">
+              <Button type="submit" className='btn-info'>
+                Checkout
+              </Button>
+            </Form>
           </div>
 
         </div>

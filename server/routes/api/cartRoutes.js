@@ -17,6 +17,6 @@ router.route('/:bidId').delete(authMiddleware, removeItem);
 
 router.route('/').get(authMiddleware, viewCart);
 
-router.route('/checkout').get(authMiddleware, checkout);
+router.route('/checkout').post(checkout);
 
 module.exports = router;

@@ -53,32 +53,38 @@ module.exports = {
   },
   async checkout(req, res) {
     try {
-      const { cardNumber, expDate, cvc, name, address, amount } = req.body;
+      //const { cardNumber, expDate, cvc, name, address, amount } = req.body;
+
+      // console.log(`${cardNumber}, ${expDate.split('/')[0]}, ${expDate.split('/')[1]}, ${cvc}, ${name}, ${address}, `);
   
-      // Create a Stripe token for the card information
-      const { token } = await stripe.tokens.create({
-        card: {
-          number: cardNumber,
-          exp_month: expDate.split('/')[0],
-          exp_year: expDate.split('/')[1],
-          cvc: cvc,
-          name: name,
-        },
-      });
-  
-      // Use the token to create a charge
-      const charge = await stripe.charges.create({
-        amount,
+      const product = await stripe.products.create({name: 'test-product'});
+
+      const price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: 200,
         currency: 'usd',
-        source: token.id,
-        description: 'Example charge',
+      });
+
+      const domain = 'http://localhost:3000';
+
+      const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+            price: price.id,
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        success_url: `${domain}?success=true`,
+        cancel_url: `${domain}?canceled=true`,
       });
   
-      res.status(200).send('Payment processed successfully');
+      res.redirect(303, session.url);
     } catch (err) {
       // Handle errors here (e.g., return an error message to the client)
       console.error(err);
-      res.status(400).json({ success: false, error: err.message });
+      res.status(400).json(err);
     }
   },
 };
