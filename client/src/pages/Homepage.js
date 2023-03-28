@@ -6,12 +6,13 @@ import '../styles/style.css';
 
 const Homepage = () => {
   const [bids, setBids] = useState('');
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
   
   const handleAddToCart = async (bidId) => {
     console.log(`view selected for bid ${bidId}`);//debug
 
     try {
-      const response = await addToCart(bidId);
+      const response = await addToCart(bidId, token);
     } catch (error) {
       console.log(error);
     }
