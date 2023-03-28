@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { viewCart, removeFromCart } from '../utils/API';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 const Cart = (props) => {
   const [cartItems, setCartItems] = useState('');
@@ -9,11 +10,14 @@ const Cart = (props) => {
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
   const { showModal2, handleModal2 } = props;
+  const navigate = useNavigate();
+
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const myData = await viewCart();
+        const myData = await viewCart(token);
         const myResults = await myData.json();
         setCartItems(myResults);
 
@@ -50,7 +54,7 @@ const Cart = (props) => {
       setTotal(getTotal);
 
       // Send a request to your server to update the cart model in the database
-      await removeFromCart(itemId);
+      await removeFromCart(itemId, token);
     } catch (err) {
       console.log(err);
     }

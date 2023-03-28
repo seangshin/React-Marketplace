@@ -3,7 +3,7 @@ import { Button, Card, CardColumns, Container, Tab, Tabs } from 'react-bootstrap
 import { getMe, removeBid } from '../utils/API';
 import Auth from '../utils/auth';
 
-const BidTab = () => {
+const BidTab = (props) => {
   const [myBids, setMyBids] = useState('');
 
   const handleDeleteBid = async (bidId) => {
@@ -15,7 +15,7 @@ const BidTab = () => {
       setMyBids(updatedBids);
 
       // Send a request to your server to update the cart model in the database
-      await removeBid(bidId);
+      await removeBid(bidId, props.token);
     } catch (err) {
       console.log(err);
     }
@@ -24,7 +24,7 @@ const BidTab = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const myData = await getMe();
+        const myData = await getMe(props.token);
         const myResults = await myData.json();
         
         console.log(myResults);//debug
@@ -34,7 +34,7 @@ const BidTab = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [props.token]);
 
   return (
     <Tabs

@@ -1,5 +1,10 @@
-export const getMe = () => {
-  return fetch('/api/bids/profile');
+export const getMe = (token) => {
+  return fetch('/api/items/profile', {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 export const createUser = (userData) => {
@@ -23,10 +28,10 @@ export const loginUser = (userData) => {
 };
 
 export const getBids = () => {
-  return fetch('/api/bids');
+  return fetch('/api/items');
 };
 
-export const createBid = (bidData) => {
+export const createBid = (bidData, token) => {
   console.log(bidData.name);
   const formData = new FormData();
   formData.append('name', bidData.name);
@@ -38,47 +43,58 @@ export const createBid = (bidData) => {
     console.log(entry[0] + ": " + entry[1]);
   }
 
-  return fetch('/api/bids', {
+  return fetch('/api/items', {
     method: 'POST',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 };
 
-export const removeBid = (bidId) => {
-  return fetch(`/api/bids/${bidId}`, {
+export const removeBid = (bidId, token) => {
+  return fetch(`/api/items/${bidId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
   });
 };
 
-export const addToCart = (bidId) => {
+export const addToCart = (bidId, token) => {
   console.log(bidId);
-  return fetch('/api/users/cart', {
+  return fetch('/api/cart', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ bidId }),
   });
 };
 
-export const viewCart = () => {
-  return fetch('/api/users/cart');
+export const viewCart = (token) => {
+  return fetch('/api/cart', {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
 };
 
-export const removeFromCart = (itemId) => {
-  return fetch(`/api/users/cart/${itemId}`, {
+export const removeFromCart = (itemId, token) => {
+  return fetch(`/api/cart/${itemId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
   });
 };
 
 export const checkout = (userData) => {
-  return fetch('/api/users/checkout', {
+  return fetch('/api/cart/checkout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Col, Form, Row } from 'react-bootstrap';
 import { checkout } from '../utils/API';
+import Auth from '../utils/auth';
 
 const Checkout = () => {
   const [formData, setFormData] = useState({ cardNumber: '', expDate: '', cvc: '', name: '', address: '', amount: 0.01 });
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

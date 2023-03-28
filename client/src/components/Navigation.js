@@ -21,7 +21,7 @@ const Navigation = () => {
 
   const handleModal2 = () => {
     setShowModal2(false);
-  }
+  };
 
   return (
     <>
