@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Button, Card, CardColumns, Carousel, Row } from 'react-bootstrap';
+import { Button, Container, Col, Card, Carousel, Dropdown, Jumbotron, Row } from 'react-bootstrap';
 import { getBids, addToCart } from '../utils/API';
 import Auth from '../utils/auth';
+import SearchBar from '../components/SearchBar';
 import '../styles/style.css';
 
 const Homepage = () => {
@@ -34,7 +35,77 @@ const Homepage = () => {
 
   return(
     <>
-    <div className='carousel-container pt-2 border'>
+    <Jumbotron className="my-jumbotron jumbotron-no-margin" style={{ backgroundImage: 'url("./assets/jtron.png")'}}>
+
+      <Container className='center'><SearchBar /></Container>
+
+      <Container className='center'>
+        <Row className="justify-content-between mt-4">
+          <Col>
+            <Dropdown>
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                Deals
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Hair</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Tools & Brushes</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Nail</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+          <Col>
+            <Dropdown>
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                Hair Care
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Shampoo</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Conditioner</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Styling</Dropdown.Item>
+                <Dropdown.Item href="#/action-4">Treatment</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+          <Col>
+          <Dropdown>
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                Nails
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Color</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Polish</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Press-on & Gel</Dropdown.Item>
+                <Dropdown.Item href="#/action-4">Dip Powder</Dropdown.Item>
+                <Dropdown.Item href="#/action-5">Nail Polish Remover</Dropdown.Item>
+                <Dropdown.Item href="#/action-6">Top & Base Coat</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+          <Col>
+          <Dropdown>
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                Cosmetics & Skincare
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Makeup</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Eyelashes</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Eye Makeup</Dropdown.Item>
+                <Dropdown.Item href="#/action-4">Face</Dropdown.Item>
+                <Dropdown.Item href="#/action-5">Lips</Dropdown.Item>
+                <Dropdown.Item href="#/action-6">Tools & Brushes</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+        </Row>
+      </Container>
+
+    </Jumbotron>
+
+    <div className='carousel-container'>
       <Carousel>
 
         <Carousel.Item>
@@ -61,42 +132,66 @@ const Homepage = () => {
 
     {bids.length ? (
       <Container>
-      <CardColumns>
-        {bids.map((bid) => {
-          if(bid) {
-            return (
-              <Card key={bid.id} style={{margin: '1rem'}}>
-                <Card.Header>
-                  <Row>
-                    <Col>{bid.name}</Col>
-                    <Col className="text-right"><i className="fa-solid fa-dollar-sign"></i>{`${bid.price}`}</Col>
-                  </Row>
-                </Card.Header>
-                <Card.Img src={`${bid.image}`} alt={`The image for ${bid.name}`} variant='top' />
-                <Card.Body className='text-center'>
-                  <Card.Subtitle className="m-2">
-                  <i className="fa-solid fa-wallet"></i> {`Bid Price: ${bid.price}`}
-                  </Card.Subtitle>
-                  <Card.Subtitle className="m-2"><i className="fa-solid fa-certificate"></i> {`Description: ${bid.description}`}
-                  </Card.Subtitle>
-                  {Auth.loggedIn() && (
-                  <Button 
-                    className='btn-info center save-btn-css m-2'
-                    variant="secondary" size="sm"
-                    onClick={() => handleAddToCart(bid.id)}>
-                      Add to Cart
-                  </Button>
-                )}
-                </Card.Body>
-              </Card>
-            );
-          } else return;
-        })}
-      </CardColumns>
+        <Row xs={1} md={2} lg={4} className='g-4' style={{ display: 'flex'}}>
+          {bids.map((bid) => {
+            if(bid) {
+              return (
+                <Col sm={6} md={3} style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Card key={bid.id} className='mt-5' style={{ flexGrow: 1 }}>
+                    <Card.Img src={`${bid.image}`} alt={`The image for ${bid.name}`} variant='top' className='p-3'/>
+                    <Card.Body className='text-center d-flex flex-column'>
+                      <Card.Subtitle className="mt-2">
+                      <strong>{`${bid.name}`}</strong>
+                      </Card.Subtitle>
+                      <Card.Subtitle 
+                      className='m-1'>
+                      {`${bid.description}`}
+                      </Card.Subtitle>
+                      <div className="mt-auto">
+                      <Card.Subtitle className='mt-5'>
+                        <strong>${bid.price}</strong>
+                      </Card.Subtitle>
+                      {Auth.loggedIn() && (
+                      <Button 
+                        className='btn-info center save-btn-css m-2'
+                        variant="secondary" size="sm"
+                        onClick={() => handleAddToCart(bid.id)}>
+                          Add to Cart
+                      </Button>
+                    )}
+                    </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            } else return;
+          })}
+        </Row>
       </Container>
       ) : (
         <div></div>
       )}
+
+      <footer className='bg-footer py-3 mt-5'>
+        <Container>
+          <Row className="justify-content-center">
+            <Col sm={6} md={3} className='text-center'>
+              
+              <span><strong>11034 Gratiot Ave, Detroit, MI 48213</strong></span>
+            </Col>
+          </Row>
+          <Row className="justify-content-center mt-3">
+            <Col sm={12} md={12} className='text-center'>
+              <span>@Copyright 2023</span>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            <Col sm={12} md={12} className='text-center'>
+              <span>All rights reserved. Powered by seangshin GitHub.</span>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
     </>
   );
 };

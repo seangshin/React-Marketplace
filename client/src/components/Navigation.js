@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import { Navbar, Nav, Container, Jumbotron, Modal, Tab, Row, Col, Dropdown } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-import SearchBar from './SearchBar';
 import Cart from './Cart';
 import Auth from '../utils/auth';
 
@@ -25,7 +24,7 @@ const Navigation = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar expand='lg' className='navigation'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
             <img
@@ -35,12 +34,10 @@ const Navigation = () => {
               height="50"
               className="d-inline-block center"
             />
-            <span className="ml-2">Marketplace</span>
+            <span className="ml-2">Jennie Beauty Supply</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
-
-            <SearchBar />
 
             <Nav 
               className="ml-auto"
@@ -50,7 +47,7 @@ const Navigation = () => {
               {loggedIn ? (
                 <>
                   <Nav.Link as={Link} to='/profile'>Profile</Nav.Link>
-                  <Nav.Link onClick={() => setShowModal2(true)}>My Cart</Nav.Link>
+                  <Nav.Link onClick={() => setShowModal2(true)}><i class="fa-solid fa-bag-shopping fa-xl"></i></Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
