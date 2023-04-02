@@ -2,11 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Homepage from "./pages/Homepage";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile"
+import "./styles/app.css";
 
 function App() {
 
   return (
+    <div className="bg">
     <Router>
       <Navigation />
       <Routes>
@@ -14,6 +16,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
+    </div>
   );
 }
 

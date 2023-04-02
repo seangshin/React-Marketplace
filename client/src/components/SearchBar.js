@@ -24,7 +24,7 @@ function SearchBar() {
           onChange={handleInput}
           value={searchTerm}
           type="search"
-          placeholder="Search Marketplace"
+          placeholder="Search"
           className="me-2"
           aria-label="Search"
           style={{ width: '50vw' }}

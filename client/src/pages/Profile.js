@@ -53,7 +53,7 @@ const Profile = () => {
 
   return(
     <>
-      <Jumbotron>
+      <Jumbotron style={{ backgroundImage: 'url("./assets/jtron.png")' }}>
         <h2>Your Account</h2>
       </Jumbotron>
       
