@@ -1,4 +1,4 @@
-const { User, Bid } = require('../models');
+const { User, Item } = require('../models');
 const stripe = require('../config/stripe');
 
 module.exports = {
@@ -9,9 +9,9 @@ module.exports = {
       // console.log(req.body);
   
       const user = await User.findByPk(req.user.id);
-      const bid = await Bid.findByPk(req.body.bidId);
+      const item = await Item.findByPk(req.body.itemId);
   
-      await user.addBid(bid, { through: { quantity: 1 } });
+      await user.addItem(item, { through: { quantity: 1 } });
   
       res.status(200);
     } catch (err) {
@@ -21,9 +21,9 @@ module.exports = {
   async removeItem(req, res) {
     try {
       const user = await User.findByPk(req.user.id);
-      const bid = await Bid.findByPk(req.params.bidId);
+      const item = await Item.findByPk(req.params.itemId);
   
-      await user.removeBid(bid);
+      await user.removeItem(item);
   
       res.status(200).json({ message: 'Item removed from cart successfully' });
     } catch (err) {
@@ -34,19 +34,19 @@ module.exports = {
     try {
       const user = await User.findByPk(req.user.id, {
         include: {
-          model: Bid,
+          model: Item,
           through: { attributes: ['quantity'] },
         },
       });
   
-      const bidData = user.bids.map((bid) => bid.get({ plain: true }));
+      const itemData = user.items.map((item) => item.get({ plain: true }));
   
       // debug
       // console.log(user);
-      // console.log(`bids: \n ${user.bids}`);
-      // console.log(`bids: \n ${JSON.stringify(bidData, null, 2)}`);
+      // console.log(`items: \n ${user.items}`);
+      // console.log(`items: \n ${JSON.stringify(bidData, null, 2)}`);
       
-      res.status(200).json(bidData);
+      res.status(200).json(itemData);
     } catch (err) {
       res.status(400).json(err);
     }

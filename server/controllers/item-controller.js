@@ -1,4 +1,4 @@
-const { User, Bid } = require('../models');
+const { User, Item } = require('../models');
 const path = require('path');
 const fs = require('fs');
 
@@ -6,13 +6,13 @@ module.exports = {
   async getAllItems(req, res) {
     try {
       // Get all posts and JOIN with user data
-      const bidData = await Bid.findAll({
+      const itemData = await Item.findAll({
         include: [{ model: User }],
       });
       //Serialize data so the template can read it
-      const bids = bidData.map((bid) => bid.get({ plain: true }));
+      const items = itemData.map((item) => item.get({ plain: true }));
       
-      res.status(200).json(bids);
+      res.status(200).json(items);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -20,18 +20,18 @@ module.exports = {
   async getMyItems(req, res) {
     console.log(req.user);
     try {
-      const bidData = await Bid.findAll({
+      const itemData = await Item.findAll({
         include: [{ model: User }],
       });
       //Serialize data so the template can read it
-      const bids = bidData.map((bid) => bid.get({ plain: true }));
-      const myBids = bids.filter((bid) => bid.user_id === req.user.id);
+      const items = itemData.map((item) => item.get({ plain: true }));
+      const myItems = items.filter((item) => item.user_id === req.user.id);
   
       //debug
-      // console.log(`bids: ${JSON.stringify(bids, null, 2)}`);
-      // console.log(`myBids: ${JSON.stringify(myBids, null, 2)}`);
+      // console.log(`items: ${JSON.stringify(items, null, 2)}`);
+      // console.log(`myItems: ${JSON.stringify(myItems, null, 2)}`);
   
-      res.status(200).json(myBids);
+      res.status(200).json(myItems);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -41,13 +41,13 @@ module.exports = {
     console.log(req.file);
     console.log(req.body);
     try {
-      const newBid = await Bid.create({
+      const newItem = await Item.create({
         ...req.body,
         user_id: req.user.id,
         image: req.file ? '/uploads/' + req.file.filename : null, // save image path to database if it exists
       });
 
-      res.status(200).json(newBid);
+      res.status(200).json(newItem);
     } catch (err) {
       // remove uploaded image if an error occurs
       if (req.file) {
@@ -59,13 +59,13 @@ module.exports = {
   },
   async deleteItem(req, res) {
     try {
-      const bidData = await Bid.destroy({
+      const itemData = await Item.destroy({
         where: {
-          id: req.params.bidId
+          id: req.params.itemId
         }
       });
   
-      if(!bidData) {
+      if(!itemData) {
         res.status(404).json({ message: 'No location found with this id!'});
         return;
       }

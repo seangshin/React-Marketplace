@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
-import { viewCart, removeFromCart, checkout } from '../utils/API';
+import { viewCart, removeFromCart } from '../utils/API';
 import { Link, useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 

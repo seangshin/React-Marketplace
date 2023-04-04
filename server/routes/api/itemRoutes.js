@@ -17,6 +17,6 @@ router.route('/profile').get(authMiddleware, getMyItems);
 
 router.route('/').post(authMiddleware, upload, createItem);
 
-router.route('/:bidId').delete(authMiddleware, deleteItem);
+router.route('/:itemId').delete(authMiddleware, deleteItem);
 
 module.exports = router;

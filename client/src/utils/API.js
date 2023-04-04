@@ -27,17 +27,17 @@ export const loginUser = (userData) => {
   });
 };
 
-export const getBids = () => {
+export const getItems = () => {
   return fetch('/api/items');
 };
 
-export const createBid = (bidData, token) => {
-  console.log(bidData.name);
+export const createItem = (itemData, token) => {
+  console.log(itemData.name);
   const formData = new FormData();
-  formData.append('name', bidData.name);
-  formData.append('description', bidData.description);
-  formData.append('price', bidData.price);
-  formData.append('image', bidData.image);
+  formData.append('name', itemData.name);
+  formData.append('description', itemData.description);
+  formData.append('price', itemData.price);
+  formData.append('image', itemData.image);
   
   for (let entry of formData.entries()) { //debug
     console.log(entry[0] + ": " + entry[1]);
@@ -52,8 +52,8 @@ export const createBid = (bidData, token) => {
   });
 };
 
-export const removeBid = (bidId, token) => {
-  return fetch(`/api/items/${bidId}`, {
+export const removeItem = (itemId, token) => {
+  return fetch(`/api/items/${itemId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -62,15 +62,15 @@ export const removeBid = (bidId, token) => {
   });
 };
 
-export const addToCart = (bidId, token) => {
-  console.log(bidId);
+export const addToCart = (itemId, token) => {
+  console.log(itemId);
   return fetch('/api/cart', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ bidId }),
+    body: JSON.stringify({ itemId }),
   });
 };
 

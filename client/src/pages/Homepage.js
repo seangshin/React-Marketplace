@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Col, Card, Carousel, Dropdown, Jumbotron, Row } from 'react-bootstrap';
-import { getBids, addToCart } from '../utils/API';
+import { getItems, addToCart } from '../utils/API';
 import Auth from '../utils/auth';
 import SearchBar from '../components/SearchBar';
 import '../styles/style.css';
 
 const Homepage = () => {
-  const [bids, setBids] = useState('');
+  const [items, setItems] = useState('');
   const token = Auth.loggedIn() ? Auth.getToken() : null;
   
-  const handleAddToCart = async (bidId) => {
-    console.log(`view selected for bid ${bidId}`);//debug
+  const handleAddToCart = async (itemId) => {
+    console.log(`view selected for item ${itemId}`);//debug
 
     try {
-      const response = await addToCart(bidId, token);
+      const response = await addToCart(itemId, token);
     } catch (error) {
       console.log(error);
     }
@@ -22,9 +22,9 @@ const Homepage = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getBids();
+        const response = await getItems();
         const results = await response.json();
-        setBids(results);
+        setItems(results);
         console.log(results);
       } catch (error) {
         console.log(error);
@@ -130,33 +130,34 @@ const Homepage = () => {
       </Carousel>
     </div>
 
-    {bids.length ? (
+    {items.length ? (
       <Container>
         <Row xs={1} md={2} lg={4} className='g-4' style={{ display: 'flex'}}>
-          {bids.map((bid) => {
-            if(bid) {
+          {items.map((item) => {
+            if(item) {
               return (
                 <Col sm={6} md={3} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Card key={bid.id} className='mt-5' style={{ flexGrow: 1 }}>
-                    <Card.Img src={`${bid.image}`} alt={`The image for ${bid.name}`} variant='top' className='p-3'/>
+                  <Card key={item.id} className='mt-5' style={{ flexGrow: 1 }}>
+                    <Card.Img src={`${item.image}`} alt={`The image for ${item.name}`} variant='top' className='p-3'/>
                     <Card.Body className='text-center d-flex flex-column'>
                       <Card.Subtitle className="mt-2">
-                      {`${bid.name}`}
+                      {`${item.name}`}
                       </Card.Subtitle>
                       <Card.Subtitle 
                       className='m-1'>
-                      {`${bid.description}`}
+                      {`${item.description}`}
                       </Card.Subtitle>
                       <div className="mt-auto">
                       <Card.Subtitle className="mt-2">
-                        <strong>${bid.price}</strong>
+                        <strong>${item.price}</strong>
                       </Card.Subtitle>
                       {Auth.loggedIn() && (
-                      <Button 
-                        className='btn-info center save-btn-css m-2'
-                        variant="secondary" size="sm"
-                        onClick={() => handleAddToCart(bid.id)}>
-                          Add to Cart
+                      <Button
+                        className='center m-2'
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => handleAddToCart(item.id)}>
+                        Add to Cart
                       </Button>
                     )}
                     </div>
