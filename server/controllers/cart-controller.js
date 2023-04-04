@@ -44,7 +44,7 @@ module.exports = {
       // debug
       // console.log(user);
       // console.log(`items: \n ${user.items}`);
-      // console.log(`items: \n ${JSON.stringify(bidData, null, 2)}`);
+      // console.log(`items: \n ${JSON.stringify(itemData, null, 2)}`);
       
       res.status(200).json(itemData);
     } catch (err) {

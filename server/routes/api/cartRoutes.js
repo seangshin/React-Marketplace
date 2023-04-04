@@ -13,7 +13,7 @@ const { authMiddleware } = require('../../utils/auth');
 
 router.route('/').post(authMiddleware, addItem);
 
-router.route('/:bidId').delete(authMiddleware, removeItem);
+router.route('/:itemId').delete(authMiddleware, removeItem);
 
 router.route('/').get(authMiddleware, viewCart);
 
