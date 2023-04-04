@@ -47,7 +47,7 @@ const Navigation = () => {
               {loggedIn ? (
                 <>
                   <Nav.Link as={Link} to='/profile'>Profile</Nav.Link>
-                  <Nav.Link onClick={() => setShowModal2(true)}><i class="fa-solid fa-bag-shopping fa-xl"></i></Nav.Link>
+                  <Nav.Link onClick={() => setShowModal2(true)}><i className="fa-solid fa-bag-shopping fa-xl"></i></Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
