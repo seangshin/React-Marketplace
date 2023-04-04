@@ -93,7 +93,7 @@ export const removeFromCart = (itemId, token) => {
   });
 };
 
-export const checkout = (userData, token) => {
+export const checkout = (total, token) => {
   console.log('checkout');
   return fetch('/api/cart/checkout', {
     method: 'POST',
@@ -101,6 +101,6 @@ export const checkout = (userData, token) => {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(userData),
+    body: JSON.stringify({total}),
   });
 };
