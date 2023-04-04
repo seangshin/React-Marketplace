@@ -53,15 +53,11 @@ module.exports = {
   },
   async checkout(req, res) {
     try {
-      //const { cardNumber, expDate, cvc, name, address, amount } = req.body;
-
-      // console.log(`${cardNumber}, ${expDate.split('/')[0]}, ${expDate.split('/')[1]}, ${cvc}, ${name}, ${address}, `);
-  
-      const product = await stripe.products.create({name: 'test-product'});
+      const product = await stripe.products.create({name: 'My Cart'});
 
       const price = await stripe.prices.create({
         product: product.id,
-        unit_amount: 200,
+        unit_amount: req.body.total,
         currency: 'usd',
       });
 
@@ -70,7 +66,6 @@ module.exports = {
       const session = await stripe.checkout.sessions.create({
         line_items: [
           {
-            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
             price: price.id,
             quantity: 1,
           },

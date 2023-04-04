@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
-import { viewCart, removeFromCart } from '../utils/API';
+import { viewCart, removeFromCart, checkout } from '../utils/API';
 import { Link, useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 
@@ -21,14 +21,15 @@ const Cart = (props) => {
         const myResults = await myData.json();
         setCartItems(myResults);
 
+        //calculate subtotal based on all cart items
         const getSubtotal = myResults.reduce((acc, item) => acc + item.price, 0);
         setSubtotal(getSubtotal);
 
         const getTax = getSubtotal * 0.06;
-        setTax(getTax);
+        setTax(getTax.toFixed(2));
 
         const getTotal = getSubtotal + getTax;
-        setTotal(getTotal);
+        setTotal(getTotal.toFixed(2));
 
       } catch (err) {
         console.log(err);
@@ -48,10 +49,10 @@ const Cart = (props) => {
       setSubtotal(getSubtotal);
 
       const getTax = getSubtotal * 0.06;
-      setTax(getTax);
+      setTax(getTax.toFixed(2));
 
       const getTotal = getSubtotal + getTax;
-      setTotal(getTotal);
+      setTotal(getTotal.toFixed(2));
 
       // Send a request to your server to update the cart model in the database
       await removeFromCart(itemId, token);
@@ -80,7 +81,7 @@ const Cart = (props) => {
               <td>{index + 1}</td>
               <td>{item.name}</td>
               <td>1</td>
-              <td>{item.price}</td>
+              <td>${item.price}</td>
               <td><Button className='btn-danger center save-btn-css m-2' onClick={() => handleRemoveItem(item.id)}><i className="fa-solid fa-trash"></i></Button></td>
             </tr>
           ))}
@@ -92,6 +93,7 @@ const Cart = (props) => {
             <p>Tax (6%): ${tax}</p>
             <p>Total: ${total}</p>
             <Form onSubmit={handleModal2} action="/api/cart/checkout" method="POST">
+              <input type="hidden" name="total" value={Math.floor(parseFloat(total)*100)} />
               <Button type="submit" className='btn-info'>
                 Checkout
               </Button>

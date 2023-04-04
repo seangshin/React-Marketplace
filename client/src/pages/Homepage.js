@@ -141,14 +141,14 @@ const Homepage = () => {
                     <Card.Img src={`${bid.image}`} alt={`The image for ${bid.name}`} variant='top' className='p-3'/>
                     <Card.Body className='text-center d-flex flex-column'>
                       <Card.Subtitle className="mt-2">
-                      <strong>{`${bid.name}`}</strong>
+                      {`${bid.name}`}
                       </Card.Subtitle>
                       <Card.Subtitle 
                       className='m-1'>
                       {`${bid.description}`}
                       </Card.Subtitle>
                       <div className="mt-auto">
-                      <Card.Subtitle className='mt-5'>
+                      <Card.Subtitle className="mt-2">
                         <strong>${bid.price}</strong>
                       </Card.Subtitle>
                       {Auth.loggedIn() && (
@@ -169,7 +169,8 @@ const Homepage = () => {
         </Row>
       </Container>
       ) : (
-        <div></div>
+        <Container fluid className='vh-100'>
+        </Container>
       )}
 
       <footer className='bg-footer py-3 mt-5'>
