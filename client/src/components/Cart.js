@@ -23,7 +23,7 @@ const Cart = (props) => {
 
         //calculate subtotal based on all cart items
         const getSubtotal = myResults.reduce((acc, item) => acc + item.price, 0);
-        setSubtotal(getSubtotal);
+        setSubtotal(getSubtotal.toFixed(2));
 
         const getTax = getSubtotal * 0.06;
         setTax(getTax.toFixed(2));
@@ -46,7 +46,7 @@ const Cart = (props) => {
 
       //recalculate cart subtotal, tax, and total
       const getSubtotal = updatedCartItems.reduce((acc, item) => acc + item.price, 0);
-      setSubtotal(getSubtotal);
+      setSubtotal(getSubtotal.toFixed(2));
 
       const getTax = getSubtotal * 0.06;
       setTax(getTax.toFixed(2));
