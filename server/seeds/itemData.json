@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Clairol Soy 4 Plex Liquicolor Permanente",
+    "description": "",
+    "price": "4.79",
+    "image": "/uploads/1680641150756.JPG",
+    "user_id": 1
+  },
+  {
+    "name": "Quantum Perms",
+    "description": "",
+    "price": "4.89",
+    "image": "/uploads/1680641421657.JPG",
+    "user_id": 1
+  },
+  {
+    "name": "Color Charm Permanent Liquid Haircolor",
+    "description": "",
+    "price": "4.19",
+    "image": "/uploads/1680649051356.JPG",
+    "user_id": 1
+  },
+  {
+    "name": "Concave Cold Wave Rods",
+    "description": "",
+    "price": "1.79",
+    "image": "/uploads/1680649152484.JPG",
+    "user_id": 1
+  },
+  {
+    "name": "Protector Conditioner Styling Aid",
+    "description": "",
+    "price": "10.79",
+    "image": "/uploads/1680651412793.JPG",
+    "user_id": 1
+  },
+  {
+    "name": "Bond N' Plex Shampoo & Conditioner",
+    "description": "",
+    "price": "55.98",
+    "image": "/uploads/1680651562846.JPG",
+    "user_id": 1
+  },
+  {
+    "name": "Bobby Pins",
+    "description": "",
+    "price": "1.19",
+    "image": "/uploads/1680651683110.JPG",
+    "user_id": 1
+  },
+  {
+    "name": "Clairol Shimmer Lights Shampoo",
+    "description": "",
+    "price": "18.99",
+    "image": "/uploads/1680651724022.JPG",
+    "user_id": 1
+  }
+]
