@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button,  Form, Jumbotron,Modal } from 'react-bootstrap';
+import { Button,  Form, Jumbotron, Modal } from 'react-bootstrap';
 import { createItem } from '../utils/API';
 import Auth from '../utils/auth';
 import ItemTab from '../components/ItemTab';
@@ -54,7 +54,7 @@ const Profile = () => {
       console.log(JSON.stringify(err));
     };
 
-    setitemData({name: '', description: '', price: 0, image: null});
+    setitemData({name: '', description: '', price: 0, image: null, options: [false, false, false ,false]});
     setShowModal(false);
   };
 

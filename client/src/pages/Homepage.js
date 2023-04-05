@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Col, Card, Carousel, Dropdown, Jumbotron, Row } from 'react-bootstrap';
+import { Button, Container, Col, Card, Carousel, Dropdown, Jumbotron, Popover, Row, OverlayTrigger, } from 'react-bootstrap';
 import { getItems, addToCart } from '../utils/API';
 import Auth from '../utils/auth';
 import SearchBar from '../components/SearchBar';
@@ -11,13 +11,19 @@ const Homepage = () => {
   
   const handleAddToCart = async (itemId) => {
     console.log(`view selected for item ${itemId}`);//debug
-
+    
     try {
       const response = await addToCart(itemId, token);
     } catch (error) {
       console.log(error);
     }
   }
+
+  const popoverClick = (
+    <Popover id="popover-trigger-click" title="Popover bottom">
+      <strong className='m-1'>Item added to cart.</strong>
+    </Popover>
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -152,14 +158,20 @@ const Homepage = () => {
                         <strong>${item.price}</strong>
                       </Card.Subtitle>
                       {Auth.loggedIn() && (
-                      <Button
-                        className='center m-2'
-                        size="sm"
-                        variant="secondary"
-                        onClick={() => handleAddToCart(item.id)}>
-                        Add to Cart
-                      </Button>
-                    )}
+                        <>
+                        <OverlayTrigger trigger="click" placement="bottom" rootClose={true} overlay={popoverClick}>
+                          <Button
+                            className='center m-2'
+                            size="sm"
+                            variant="secondary"
+                            onClick={() => {handleAddToCart(item.id);}}>
+                            Add to Cart
+                          </Button>
+                          </OverlayTrigger>
+                          
+                        </>
+                      )}
+                      
                     </div>
                     </Card.Body>
                   </Card>
@@ -194,7 +206,11 @@ const Homepage = () => {
           </Row>
         </Container>
       </footer>
+
+      
     </>
+
+    
   );
 };
 
