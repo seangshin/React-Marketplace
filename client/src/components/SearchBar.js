@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-function SearchBar() {
+function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInput = (event) => {
@@ -9,12 +9,14 @@ function SearchBar() {
     setSearchTerm(value);
     console.log(searchTerm);
     // Perform search operation with the search term
+    props.onSearchTermChange(value);
   };
 
   const handleSearch = (event) => {
     event.preventDefault();
     console.log(searchTerm);
     // Perform search operation with the search term
+    props.onSearchTermSubmit(searchTerm);
   };
 
   return (
