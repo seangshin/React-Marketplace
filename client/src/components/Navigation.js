@@ -9,7 +9,7 @@ import Auth from '../utils/auth';
 const Navigation = () => {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,14 +43,14 @@ const Navigation = () => {
               className="ml-auto"
               style={{ maxHeight: '100px' }}
               navbar>
-              {/* if user is logged in show saved books and logout */}
-              {loggedIn ? (
+              {loggedIn && (
                 <>
                   <Nav.Link as={Link} to='/profile'>Profile</Nav.Link>
                   <Nav.Link onClick={() => setShowModal2(true)}><i className="fa-solid fa-bag-shopping fa-xl"></i></Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
-              ) : (
+              )}
+              {!loggedIn && (
                 <Nav.Link onClick={() => setShowModal1(true)}>Login/Sign Up</Nav.Link>
               )}
             </Nav>
