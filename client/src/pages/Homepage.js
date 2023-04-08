@@ -6,8 +6,9 @@ import SearchBar from '../components/SearchBar';
 import '../styles/style.css';
 
 const Homepage = () => {
-  const [items, setItems] = useState('');
+  const [items, setItems] = useState([]);
   const token = Auth.loggedIn() ? Auth.getToken() : null;
+  const [searchTerm, setSearchTerm] = useState('');
   
   const handleAddToCart = async (itemId) => {
     console.log(`view selected for item ${itemId}`);//debug
@@ -17,7 +18,16 @@ const Homepage = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const handleSearchTermChange = (term) => {
+    setSearchTerm(term);
+  };
+
+  const handleSearchTermSubmit = (term) => {
+    console.log(`Performing search with term: ${term}`);
+    // Perform search operation with the search term
+  };
 
   const popoverClick = (
     <Popover id="popover-trigger-click" title="Popover bottom">
@@ -39,11 +49,17 @@ const Homepage = () => {
     fetchData();
   }, []);
 
+  // Filter items based on search term
+  const filteredItems = items.filter((item) => {
+    return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
   return(
     <>
     <Jumbotron className="my-jumbotron jumbotron-no-margin" style={{ backgroundImage: 'url("./assets/jtron.png")'}}>
 
-      <Container className='center'><SearchBar /></Container>
+      <Container className='center'><SearchBar onSearchTermChange={handleSearchTermChange}
+        onSearchTermSubmit={handleSearchTermSubmit} /></Container>
 
       <Container className='center'>
         <Row className="justify-content-between mt-4">
@@ -136,10 +152,10 @@ const Homepage = () => {
       </Carousel>
     </div>
 
-    {items.length ? (
+    {filteredItems.length ? (
       <Container>
         <Row xs={1} md={2} lg={4} className='g-4' style={{ display: 'flex'}}>
-          {items.map((item) => {
+          {filteredItems.map((item) => {
             if(item) {
               return (
                 <Col sm={6} md={3} style={{ display: 'flex', flexDirection: 'column' }}>
