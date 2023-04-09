@@ -16,7 +16,7 @@ const { sequelize, transporter } = require('./config/connection');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(routes); // Set up for the routes
-app.use(express.static(path.join(__dirname, 'public'))); //*********
+app.use(express.static(path.join(__dirname, '../client/build'))); //*********
 
 // sync sequelize models to the database, then turn on the server
 sequelize.sync({ force: false }).then(() => {
