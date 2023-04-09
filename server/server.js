@@ -18,13 +18,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  console.log('In production *******');
 };
 app.use(routes); // Set up for the routes
 app.use(express.static(path.join(__dirname, '../client/build'))); //*********
 
 
 // sync sequelize models to the database, then turn on the server
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`Sever listening on http://localhost:${PORT}`));
 });
