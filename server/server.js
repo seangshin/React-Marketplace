@@ -15,8 +15,14 @@ const { sequelize, transporter } = require('./config/connection');
 // middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
+// if we're in production, serve client/build as static assets
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  console.log('In production *******');
+};
 app.use(routes); // Set up for the routes
 app.use(express.static(path.join(__dirname, '../client/build'))); //*********
+
 
 // sync sequelize models to the database, then turn on the server
 sequelize.sync({ force: true }).then(() => {
