@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-function SearchBar(props) {
+function SearchBar({ handleSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInput = (event) => {
     const { value } = event.target;
     setSearchTerm(value);
-    console.log(searchTerm);
     // Perform search operation with the search term
-    props.onSearchTermChange(value);
+    handleSearch(value);
   };
 
-  const handleSearch = (event) => {
+  const handleSearchSubmit = (event) => {
     event.preventDefault();
-    console.log(searchTerm);
     // Perform search operation with the search term
-    props.onSearchTermSubmit(searchTerm);
   };
 
   return (

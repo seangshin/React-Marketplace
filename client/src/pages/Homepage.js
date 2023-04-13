@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Col, Card, Carousel, Dropdown, Jumbotron, Popover, Row, OverlayTrigger, } from 'react-bootstrap';
+import { Button, Container, Col, Card, Carousel, Navbar, NavDropdown, OverlayTrigger, Popover, Row } from 'react-bootstrap';
 import { getItems, addToCart } from '../utils/API';
 import Auth from '../utils/auth';
-import SearchBar from '../components/SearchBar';
 import '../styles/style.css';
 
-const Homepage = () => {
+const Homepage = ( {searchTerm} ) => {
   const [items, setItems] = useState([]);
   const token = Auth.loggedIn() ? Auth.getToken() : null;
-  const [searchTerm, setSearchTerm] = useState('');
+  const [show, setShow] = useState([false, false, false, false]);
   
   const handleAddToCart = async (itemId) => {
     console.log(`view selected for item ${itemId}`);//debug
@@ -18,15 +17,6 @@ const Homepage = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleSearchTermChange = (term) => {
-    setSearchTerm(term);
-  };
-
-  const handleSearchTermSubmit = (term) => {
-    console.log(`Performing search with term: ${term}`);
-    // Perform search operation with the search term
   };
 
   const popoverClick = (
@@ -56,77 +46,57 @@ const Homepage = () => {
 
   return(
     <>
-    <Jumbotron className="my-jumbotron jumbotron-no-margin" style={{ backgroundImage: 'url("./assets/jtron.png")'}}>
+    
+    <Navbar className='center' expand='lg' bg="light" >
+      <NavDropdown title="Deals" 
+        id="collasible-nav-dropdown-1" 
+        show={show[0]} onMouseEnter={() => setShow([true, false, false, false])}
+        onMouseLeave={() => setShow([false, false, false, false])}>
 
-      <Container className='center'><SearchBar onSearchTermChange={handleSearchTermChange}
-        onSearchTermSubmit={handleSearchTermSubmit} /></Container>
+        <NavDropdown.Item href="#/action-1-1">Hair</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-1-2">Tools & Brushes</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-1-3">Nails</NavDropdown.Item>
+      </NavDropdown>
 
-      <Container className='center'>
-        <Row className="justify-content-between mt-4">
-          <Col>
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                Deals
-              </Dropdown.Toggle>
+      <NavDropdown title="Hair Care" 
+        id="collasible-nav-dropdown-2" 
+        show={show[1]} onMouseEnter={() => setShow([false, true, false, false])}
+        onMouseLeave={() => setShow([false, false, false, false])}>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Hair</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Tools & Brushes</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Nail</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-          <Col>
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                Hair Care
-              </Dropdown.Toggle>
+        <NavDropdown.Item href="#/action-2-1">Shampoo</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-2-2">Conditioner</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-2-3">Styling</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-2-4">Treatment</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-2-5">Tools & Brushes</NavDropdown.Item>
+      </NavDropdown>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Shampoo</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Conditioner</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Styling</Dropdown.Item>
-                <Dropdown.Item href="#/action-4">Treatment</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-          <Col>
-          <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                Nails
-              </Dropdown.Toggle>
+      <NavDropdown title="Nails" 
+        id="collasible-nav-dropdown-3" 
+        show={show[2]} onMouseEnter={() => setShow([false, false, true, false])}
+        onMouseLeave={() => setShow([false, false, false, false])}>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Color</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Polish</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Press-on & Gel</Dropdown.Item>
-                <Dropdown.Item href="#/action-4">Dip Powder</Dropdown.Item>
-                <Dropdown.Item href="#/action-5">Nail Polish Remover</Dropdown.Item>
-                <Dropdown.Item href="#/action-6">Top & Base Coat</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-          <Col>
-          <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                Cosmetics & Skincare
-              </Dropdown.Toggle>
+        <NavDropdown.Item href="#/action-3-1">Color</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-3-2">Polish</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-3-3">Press-On & Gel</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-3-4">Dip Powder</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-3-5">Remover</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-3-5">Top & Base Coat</NavDropdown.Item>
+      </NavDropdown>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Makeup</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Eyelashes</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Eye Makeup</Dropdown.Item>
-                <Dropdown.Item href="#/action-4">Face</Dropdown.Item>
-                <Dropdown.Item href="#/action-5">Lips</Dropdown.Item>
-                <Dropdown.Item href="#/action-6">Tools & Brushes</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-        </Row>
-      </Container>
+      <NavDropdown title="Cosmetics & Skincare" 
+        id="collasible-nav-dropdown-4" 
+        show={show[3]} onMouseEnter={() => setShow([false, false, false, true])}
+        onMouseLeave={() => setShow([false, false, false, false])}>
 
-    </Jumbotron>
-
+        <NavDropdown.Item href="#/action-4-1">Makeup</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-4-2">Eyelashes</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-4-3">Eye Makeup</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-4-4">Face</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-4-5">Lips</NavDropdown.Item>
+        <NavDropdown.Item href="#/action-4-5">Lotion</NavDropdown.Item>
+      </NavDropdown>
+    </Navbar>
+        
     <div className='carousel-container'>
       <Carousel>
 
