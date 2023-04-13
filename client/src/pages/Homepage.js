@@ -187,6 +187,7 @@ const Homepage = ( {searchTerm} ) => {
                         <OverlayTrigger trigger="click" placement="bottom" rootClose={true} overlay={popoverClick}>
                           <Button
                             className='center m-2'
+                            style={{ display: 'inline-block'}}
                             size="sm"
                             variant="secondary"
                             onClick={() => {handleAddToCart(item.id);}}>
