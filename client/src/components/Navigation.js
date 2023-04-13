@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Jumbotron, Modal, Tab, Row, Col, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
+import SearchBar from './SearchBar';
 import Cart from './Cart';
 import Auth from '../utils/auth';
 
-const Navigation = () => {
+const Navigation = ({ setSearchTerm }) => {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
@@ -18,26 +19,28 @@ const Navigation = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
   const handleModal2 = () => {
     setShowModal2(false);
   };
 
   return (
     <>
-      <Navbar expand='lg' className='navigation'>
+      <Navbar expand='lg' bg="light" className='navigation'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-            <img
-              alt=""
-              src="./assets/market.png"
-              width="50"
-              height="50"
-              className="d-inline-block center"
-            />
-            <span className="ml-2">Jennie Beauty Supply</span>
+            
+            <i className="fa-solid fa-house"></i>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
+
+          <Container className='center'>
+            <SearchBar handleSearch={handleSearch} />
+          </Container>
 
             <Nav 
               className="ml-auto"

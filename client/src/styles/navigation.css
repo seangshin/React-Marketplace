@@ -1,6 +1,5 @@
 .navigation {
-  background: url("../assets/bg.png");
-  background-color: transparent !important;
+  
   display: flex;
   flex-direction: row;
   justify-content: center;
