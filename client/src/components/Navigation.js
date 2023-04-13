@@ -34,6 +34,7 @@ const Navigation = ({ setSearchTerm }) => {
           <Navbar.Brand as={Link} to='/'>
             
             <i className="fa-solid fa-house"></i>
+            <span className="ml-4">JENNIE BEAUTY SUPPLY</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
@@ -48,9 +49,9 @@ const Navigation = ({ setSearchTerm }) => {
               navbar>
               {loggedIn && (
                 <>
-                  <Nav.Link as={Link} to='/profile'>Profile</Nav.Link>
-                  <Nav.Link onClick={() => setShowModal2(true)}><i className="fa-solid fa-bag-shopping fa-xl"></i></Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                  <Nav.Link className="navlink" as={Link} to='/profile'>Profile</Nav.Link>
+                  <Nav.Link className="navlink" onClick={() => setShowModal2(true)}><i className="fa-solid fa-bag-shopping fa-xl"></i></Nav.Link>
+                  <Nav.Link className="navlink" onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               )}
               {!loggedIn && (

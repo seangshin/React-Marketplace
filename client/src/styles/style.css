@@ -1,7 +1,14 @@
 .carousel-container {
-  width: 100%;
-  height: 20vh;
-  overflow: hidden;
+  text-align: center;
+  margin: 0 auto;
+  width: 100vw;
+  height: 60vh;
+}
+
+.carousel-image {
+  display: inline-block;
+  width: 100vw;
+  height: 80vh;
 }
 
 .my-jumbotron.jumbotron-no-margin {
@@ -11,4 +18,14 @@
 .bg-footer {
   background-color: rgb(248, 249, 250);
   
+}
+
+.dropdowntoggle {
+  font-size: 22px;
+}
+
+.navlink {
+  font-size: 18px;
+  font-weight: bolder;
+  margin-right: 10px;
 }

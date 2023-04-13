@@ -1,3 +1,7 @@
+* {
+  font-family: Lobster;
+  font-size: 16px;
+}
 .bg {
   background: url("../assets/background2.jpg") center center/cover no-repeat;
   background-color: transparent !important;
