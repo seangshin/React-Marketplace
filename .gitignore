@@ -9,4 +9,3 @@ client/package-lock.json
 server/package-lock.json
 
 server/.env
-client/public/uploads
