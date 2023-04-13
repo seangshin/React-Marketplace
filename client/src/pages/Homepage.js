@@ -153,7 +153,7 @@ const Homepage = ( {searchTerm} ) => {
         <Carousel.Item>
           <img
             className="carousel-image"
-            src="./assets/image1.jpg"
+            src="./assets/image1.JPG"
             alt="Second slide"
           />
         </Carousel.Item>
