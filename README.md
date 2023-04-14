@@ -14,7 +14,6 @@ The motivation of this project is to build a MERN application that is a Content 
 - [Credits](#credits)
 - [License](#license)
 - [Questions](#questions)
-- [Appendix](#appendix)
   
 ## Installation
 The following tools were used for development and testing of this project: Code development IDE (Microsoft VS Code), node.js (JavaScript runtime environment), npm (software registry containing inquirer). See below for the full list of dependencies.
