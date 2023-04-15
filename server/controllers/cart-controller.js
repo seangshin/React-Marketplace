@@ -61,7 +61,8 @@ module.exports = {
         currency: 'usd',
       });
 
-      const domain = 'http://localhost:3000';
+      //const domain = 'http://localhost:3000'; //for development
+      const domain = 'https://quiet-gorge-31724.herokuapp.com/';
 
       const session = await stripe.checkout.sessions.create({
         line_items: [
